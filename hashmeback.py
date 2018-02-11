@@ -10,6 +10,7 @@ import logging
 import threading
 import hashlib
 import time
+from os import curdir, sep
 
 
 myhash = None
@@ -72,6 +73,56 @@ class S(BaseHTTPRequestHandler):
             else:
                 self.wfile.write("Too late :(")
 
+class S2(BaseHTTPRequestHandler):
+    def _set_response(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain; charset=utf-8')
+        self.end_headers()
+
+    def do_GET(self):
+        if self.path=="/":
+            self.path="/index.html"
+
+        try:
+            #Check the file extension required and
+            #set the right mime type
+
+            sendReply = False
+            if self.path.endswith(".html"):
+                mimetype='text/html'
+                sendReply = True
+            if self.path.endswith(".png"):
+                mimetype='image/png'
+                sendReply = True
+            if self.path.endswith(".js"):
+                mimetype='application/javascript'
+                sendReply = True
+
+            if sendReply == True:
+                #Open the static file requested and send it
+                f = open(curdir + sep + self.path) 
+                self.send_response(200)
+                self.send_header('Content-type',mimetype + '; charset=utf-8')
+                self.end_headers()
+                self.wfile.write(f.read())
+                f.close()
+            return
+
+        except IOError:
+            self.send_error(404,'File Not Found: %s' % self.path)
+        logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(self.path), str(self.headers))
+        #self._set_response()
+        #self.wfile.write("Bienvenidos al CTF de programación2!")
+
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
+        post_data = self.rfile.read(content_length) # <--- Gets the data itself
+        logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
+                str(self.path), str(self.headers), post_data.decode('utf-8'))
+        post=post_data.split('=')
+        print post
+        self._set_response()
+
 def run(server_class=HTTPServer, handler_class=S, port=8080):
     logging.basicConfig(level=logging.INFO)
     t = threading.Thread(target=worker)
@@ -86,9 +137,20 @@ def run(server_class=HTTPServer, handler_class=S, port=8080):
     httpd.server_close()
     logging.info('Stopping httpd...\n')
 
+def run2(server_class=HTTPServer, handler_class=S2, port=8081):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    logging.info('Starting httpd...\n')
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    httpd.server_close()
+    logging.info('Stopping httpd...\n')
+
 if __name__ == '__main__':
     from sys import argv
-    if len(argv) == 2:
-        run(port=int(argv[1]))
-    else:
-        run()
+    t1 = threading.Thread(target=run)
+    t2 = threading.Thread(target=run2)
+    t1.start()
+    t2.start()

@@ -2,6 +2,8 @@
 <html>
 <head>
 	<title>CTF2</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="jquery1337.js"></script>
 </head>
 
 <body>
@@ -14,39 +16,42 @@
 	Lo cierto es que tratando de enhebrar una aguja, se me ha caído y soy incapaz de encontrarla... <br><br>
 
 	Mi pajar está compuesto de 500x500 parcelas. Sabrías decirme dónde se me ha caído mi aguja (carácter "|")?<br><br>
-
+	<div style="font-size: large;">
+		<label for="x_loc">X: </label><b><code class="x_loc_data">250</code></b><br>
+		<label for="y_loc">Y: </label><b><code class="y_loc_data">250</code></b><br>
+	</div>
 	<div class="pajar">
-		<table>
-			<tr>
-				<td>
+		<table style="width: 700px;height: 700px">
+			<tr style="height: 40px;">
+				<td style="width: 40px;">
 					
 				</td>
-				<td class="flechaUP">
-					<img src="flechaUP.png" alt="flechaUP" style="width: 10%; height: 10%">
+				<td class="flechaUP" style="width: 620px;" align="center">
+					<img class="flecha flechaUP" src="flechaUP.png" alt="flechaUP" style="height: 40px;" data-url="6bc193878f2dbdb1afc719cd75069c37bedd2f530346158f8e1a277572605f82N">
 				</td>
-				<td>
+				<td style="width: 40px;">
 					
 				</td>
 			</tr>
-			<tr>
-				<td class="flechaLEFT">
-					<img src="flechaLEFT.png" alt="flechaLEFT" style="width: 10%; height: 10%">
+			<tr style="height: 620px;">
+				<td class="flechaLEFT" style="width: 40px;">
+					<img class="flecha flechaLEFT" src="flechaLEFT.png" alt="flechaLEFT" style="width: 40px;" data-url="6bc193878f2dbdb1afc719cd75069c37bedd2f530346158f8e1a277572605f82O">
 				</td>
-				<td class="paja">
-					
+				<td style="width: 620px;border: 1px solid black;">
+					<code class="paja"></code>
 				</td>
-				<td class="flechaRIGHT">
-					<img src="flechaRIGHT.png" alt="flechaRIGHT" style="width: 10%; height: 10%">
+				<td class="flechaRIGHT" style="width: 40px;">
+					<img class="flecha flechaRIGHT" src="flechaRIGHT.png" alt="flechaRIGHT" style="width: 40px;" data-url="6bc193878f2dbdb1afc719cd75069c37bedd2f530346158f8e1a277572605f82E">
 				</td>
 			</tr>
-			<tr>
-				<td>
+			<tr  style="height: 40px;">
+				<td style="width: 40px;">
 					
 				</td>
-				<td class="flechaDOWN">
-					<img src="flechaDOWN.png" alt="flechaDOWN" style="width: 10%; height: 10%">
+				<td class="flechaDOWN" style="width: 620px;" align="center">
+					<img class="flecha flechaDOWN" src="flechaDOWN.png" alt="flechaDOWN" style="height: 40px;" data-url="6bc193878f2dbdb1afc719cd75069c37bedd2f530346158f8e1a277572605f82S">
 				</td>
-				<td>
+				<td style="width: 40px;">
 					
 				</td>
 			</tr>
